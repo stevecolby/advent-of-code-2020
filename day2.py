@@ -1,6 +1,6 @@
-def main():
+def Day2():
     validPasswordCount = 0
-    with open('input') as input_file:
+    with open('day2_input') as input_file:
         lines = input_file.readlines()
         
         for line in lines:
@@ -32,7 +32,3 @@ def isPasswordValid(input_line):
         print('DOUBLE MATCH: ', input_line)
     
     return False
-
-
-if __name__ == "__main__":
-    main()

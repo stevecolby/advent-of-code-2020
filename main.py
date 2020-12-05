@@ -1,7 +1,7 @@
-from day4 import *
+from day5.day5 import *
 
 def main():
-    Day4()
+    Day5()
 
 if __name__ == "__main__":
     main()

@@ -8,7 +8,9 @@ def Day1():
             numbers.append(int(line.strip('\n')))
         
         for current_number in numbers:
-            if 2020 - current_number in numbers:
-                pair = 2020 - current_number
-                print('found! ', current_number, ' and ', pair, ' - product = ', current_number * pair)
-                break
+            for second_number in numbers:
+                if 2020 - current_number - second_number in numbers:
+                    pair = 2020 - current_number - second_number
+                    print('found! ', current_number, ', ', second_number, ' and ', pair)
+                    print('Product = ', current_number * second_number * pair)
+                    break

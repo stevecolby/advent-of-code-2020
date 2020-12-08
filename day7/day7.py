@@ -8,8 +8,6 @@ class Bag(object):
         self.contents = []
         self.count = 0
 
-unique_parents = []
-
 def Day7():
     bags = []
 
@@ -41,35 +39,22 @@ def Day7():
                 print('')
             
             bags.append(main_bag)
-    
-    has_golden_count = 0
-    loopcount = 0
+    total_bag_count = 0
 
-    for bag in bags:
-        loopcount+= 1
-        if check_for_shinygold(bag, bags):
-            has_golden_count += 1
-         #   print(loopcount, ' hit: ', bag.color)
-        #else:
-            #print(loopcount, ' miss:', bag.color)
-    
-    print('total bags: ', has_golden_count)
+    shiny_gold_bag = [x for x in bags if x.color == 'shinygold'][0]
 
-def check_for_shinygold(bag, bags):
-    if bag.color == 'shinygold':
-        return True
-    else:
+    x = sum_contents(shiny_gold_bag, 1, bags)
+
+    print('total bags: ', total_bag_count)
+
+def sum_contents(bag, multiplier, bags):
+    total_bag_count = 0
+    prev_call = 0
+
+    if len(bag.contents) > 0:
         for child_bag in bag.contents:
-            if child_bag.color == 'shinygold':
-                print(bag.color)
-                if bag.color not in unique_parents:
-                    unique_parents.append(bag.color)
-                return True
-    
-    #bag is not gold, doesn't contain gold. Call to check each content bag
-    for content_bag in bag.contents:
-        next_bag = [x for x in bags if x.color == content_bag.color]
-        if check_for_shinygold(next_bag[0], bags):
-            return True
-    
-    return False
+            next_bag = [x for x in bags if x.color == child_bag.color][0]
+            next_bag.count = child_bag.count
+            prev_call += sum_contents(next_bag, child_bag.count*multiplier, bags)
+    total_bag_count = multiplier + prev_call
+    return total_bag_count

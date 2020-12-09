@@ -1,30 +1,31 @@
 def Day9(lines):
-    buffer_length = 25
+    invalid_number = 507622668
     numbers = []
 
     for line in lines:
         numbers.append(int(line))
     
-    counter = buffer_length
+    counter = 0
     while counter < len(numbers):
-        previous_numbers = numbers[counter-buffer_length:counter]
+        current_sum = 0
+        current_min = 1000000000
+        current_max = 0
 
-        found = False
-        for first_number in previous_numbers:
+        sub_list = numbers[counter:]
 
-            if not found:
-                for second_number in previous_numbers:
-                    
-                    if (first_number != second_number and
-                    first_number + second_number == numbers[counter]):
-                        found = True
-                        break
-            else:
-                break
-        
-        if not found:
-            print('Match not found at {0}: {1}'.format(counter, numbers[counter]))
-            return
+        for number in sub_list:
+            current_sum += number
+
+            if number < current_min:
+                current_min = number
+            elif number > current_max:
+                current_max = number
+            
+            if current_sum == invalid_number:
+                print('Found at {0}. Min: {1}, Max: {2}. Sum: {3}'.format(
+                    counter, current_min, current_max, current_min + current_max
+                ))
+                return
         
         counter += 1
 

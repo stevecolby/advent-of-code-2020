@@ -1,6 +1,6 @@
 import importlib, sys
 
-day = 9
+day = 10
 use_test_data = False
 
 def main():
@@ -20,7 +20,7 @@ def main():
         for line in lines:
             clean_lines.append(line.strip('\n.'))
 
-        getattr(sys.modules[import_name], "Day%s" % day)(clean_lines)    
+        getattr(sys.modules[import_name], "Run")(clean_lines)    
         
 
 if __name__ == "__main__":

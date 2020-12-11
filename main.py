@@ -1,4 +1,5 @@
 import importlib, sys
+import time
 
 day = 10
 use_test_data = False
@@ -24,4 +25,6 @@ def main():
         
 
 if __name__ == "__main__":
+    start_time = time.time()
     main()
+    print("--- %s seconds ---" % (time.time() - start_time))

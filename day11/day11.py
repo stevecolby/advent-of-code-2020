@@ -30,7 +30,7 @@ def Run(lines):
                         green[x][y] = '#'
                         changes_found = True
                 else:
-                    if current_seat == '#' and num_occupied >= 4:
+                    if current_seat == '#' and num_occupied >= 5:
                         green[x][y] = 'L'
                         changes_found = True
                 x+=1
@@ -39,7 +39,6 @@ def Run(lines):
         should_occupy = not should_occupy
         blue = []
         blue = copy.deepcopy(green)
-        print()
     
     total_seats = 0
     for row in blue:
@@ -49,37 +48,71 @@ def Run(lines):
 
 def count_occupied(lines, x, y):
     occupied_count = 0
+
+    left = False
+    right = False
+    up = False
+    down = False
     
     if x > 0:
-        min_x = x - 1
-    else:
-        min_x = 0
+        left = True
     
     if y > 0:
-        min_y = y - 1
-    else:
-        min_y = 0
+        up = True
     
     if x < len(lines)-1:
-        max_x = x + 1
-    else:
-        max_x = x
+        right = True
     
     if y < len(lines[0])-1:
-        max_y = y + 1
-    else:
-        max_y = y
+        down = True
 
+    #check 8 combinations
+    if up and left:
+        if occupied_seat_found(-1, -1, x-1, y-1, lines):
+            occupied_count += 1
     
-    while min_x <= max_x:
-        y_counter = min_y
-        while y_counter <= max_y:
-            if not (min_x == x and y_counter == y):
-                if lines[min_x][y_counter] ==  '#':
-                    occupied_count+=1
-            y_counter+=1
-        min_x+=1
+    if up:
+        if occupied_seat_found(0, -1, x, y-1, lines):
+            occupied_count += 1
+    
+    if up and right:
+        if occupied_seat_found(1, -1, x+1, y-1, lines):
+            occupied_count += 1
+    
+    if right:
+        if occupied_seat_found(1, 0, x+1, y, lines):
+            occupied_count += 1
+    
+    if down and right:
+        if occupied_seat_found(1, 1, x+1, y+1, lines):
+            occupied_count += 1
+    
+    if down:
+        if occupied_seat_found(0, 1, x, y+1, lines):
+            occupied_count += 1
+    
+    if down and left:
+        if occupied_seat_found(-1, 1, x-1, y+1, lines):
+            occupied_count += 1
+    
+    if left:
+        if occupied_seat_found(-1, 0, x-1, y, lines):
+            occupied_count += 1
     
     return occupied_count
 
+def occupied_seat_found(x_change, y_change, x, y, lines):
     
+    if lines[x][y] == '#':
+        return True
+    elif lines[x][y] == 'L':
+        return False
+    
+    if (y + y_change < len(lines[0]) and 
+        y + y_change >= 0 and 
+        x + x_change < len(lines) and
+        x + x_change >= 0):
+        check_seat =  occupied_seat_found(x_change, y_change, x + x_change, y + y_change, lines)
+        return check_seat
+    else:
+        return False

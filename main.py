@@ -1,17 +1,18 @@
 import importlib, sys
 import time
 
-day = 14
+day = 16
+part = 2
 use_test_data = False
 
 def main():
 
-    import_name = 'day{0}.day{0}'.format(day)
+    import_name = 'day{0}.part{1}.run'.format(day, part)
     importlib.import_module(import_name)
     if use_test_data:
-        input_filename = 'day{0}/day{0}_test_input'.format(day)
+        input_filename = 'day{0}/part{1}/test_input'.format(day, part)
     else:
-        input_filename = 'day{0}/day{0}_input'.format(day)
+        input_filename = 'day{0}/part{1}/input'.format(day, part)
 
     with open(input_filename) as input_file:
         lines = input_file.readlines()

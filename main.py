@@ -1,7 +1,6 @@
-import importlib, sys
-import time
+import importlib, sys, time
 
-day = 16
+day = 17
 part = 2
 use_test_data = False
 

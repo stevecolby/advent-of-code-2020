@@ -1,6 +1,6 @@
 import importlib, sys, time
 
-day = 17
+day = 18
 part = 2
 use_test_data = False
 
